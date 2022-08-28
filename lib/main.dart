@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,59 +12,64 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'DynaPuff-Regular'
+      home: Scaffold(
+        backgroundColor: Colors.red,
+        appBar: AppBar(
+          title: const Text("Dice App"),
+          backgroundColor: Colors.red,
+        ),
+        body: const DicePage(),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+class DicePage extends StatefulWidget {
+  const DicePage({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<DicePage> createState() => _DicePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _DicePageState extends State<DicePage> {
+  int leftDiceNumber = 5;
+  int rightDiceNumber = 5;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  void changeDiceFace() {
+    rightDiceNumber = Random().nextInt(6) + 1;
+    leftDiceNumber = Random().nextInt(6) + 1;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: GestureDetector(
+                child: Image.asset("images/dice$leftDiceNumber.png"),
+                onTap: () {
+                  setState(
+                    () => changeDiceFace(),
+                  );
+                },
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: GestureDetector(
+                child: Image.asset("images/dice$rightDiceNumber.png"),
+                onTap: () {
+                  setState(() => changeDiceFace());
+                },
+              ),
+            )
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      ],
     );
   }
 }
