@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:number_trivia_app/features/challenge/ball_page.dart';
+import 'package:number_trivia_app/features/timeline/timeline_page.dart';
+import 'package:number_trivia_app/features/xylophone/xylophone_app.dart';
 
 import 'features/challenge/dice_page.dart';
 
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: BallPage(),
+      home: TimelinePage(),
     );
   }
 }
